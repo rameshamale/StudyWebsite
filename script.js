@@ -1,5 +1,17 @@
 let recognition;
 let listening = false; // tracks whether user clicked "Record"
+// Request microphone permission every time
+async function requestMicPermission() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    console.log("🎤 Permission granted");
+    // Stop the stream immediately if you only want the prompt
+    stream.getTracks().forEach(track => track.stop());
+  } catch (err) {
+    console.error("Microphone access denied:", err);
+    alert("Microphone access is required to start recording.");
+  }
+}
 
 // Check if browser supports webkitSpeechRecognition
 if ('webkitSpeechRecognition' in window) {
@@ -43,10 +55,15 @@ if ('webkitSpeechRecognition' in window) {
 function startListening() {
   if (recognition && !listening) {
     listening = true;
-    recognition.start();
-    document.getElementById("transcript").textContent = "🎤 Listening...";
+    try {
+      recognition.start();
+      document.getElementById("transcript").textContent = "🎤 Listening...";
+    } catch(e) {
+      console.error("Error starting recognition:", e);
+    }
   }
 }
+
 
 // Stop listening
 function stopListening() {
