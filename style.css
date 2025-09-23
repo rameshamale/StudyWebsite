@@ -1,7 +1,6 @@
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body { height:100%; font-family: Arial, sans-serif; background:#f0f4f8; }
-body { display:flex; flex-direction: column; }
-
+body { display:flex; flex-direction: column; padding-top: 50px; }
 
 .container {
   flex:1 1 auto;
@@ -11,25 +10,12 @@ body { display:flex; flex-direction: column; }
   width:100%;
 }
 
-.controls {
-  display: flex;          /* use flex layout */
-  justify-content: flex-start;  /* align items to the left */
-  gap: 10px;              /* spacing between buttons */
-  margin: 10px 0;
-}
-
-.controls button {
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 12px;
-  cursor: pointer;
-}
-
+.controls { display:flex; gap:10px; margin:10px 0; }
+.controls button { padding:12px 20px; border:none; border-radius:8px; cursor:pointer; transition:0.2s; }
+.controls button:hover { transform:scale(1.05); }
 
 #recordBtn { background:#2563eb; color:#fff; }
 #stopBtn { background:#dc2626; color:#fff; }
-#askBtn { background:#16a34a; color:#fff; }
 #clearBtn { background:#f97316; color:#fff; }
 
 #transcript {
@@ -43,60 +29,160 @@ body { display:flex; flex-direction: column; }
   overflow-y:auto;
   white-space: pre-wrap;
   margin-bottom:20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.btn-group, .btn-group1 {
-  display:flex;
-  justify-content:space-between;
+/* Tabs */
+.btn-group1 { display:flex; gap:10px; margin-bottom:15px; }
+.btn-group1 button { flex:1; padding:10px; border:none; border-radius:6px; cursor:pointer; font-size:14px; transition:0.2s; }
+.btn-group1 button.active { box-shadow:0 0 10px orange; border:2px solid orange; }
+.btn-group1 button:hover { opacity:0.9; }
+
+/* Tab content fade-in */
+.tabcontent, .subtabcontent {
+  display:none;
+  margin-top:20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.tabcontent.active, .subtabcontent.active { display:block; }
+
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+.tabcontent img, .subtabcontent img {
+  display:block;
+  margin:15px auto;
+  width:80%;
+  max-width:800px;
+  height:auto;
+}
+
+/* Navbar */
+.navbar {
+  overflow:hidden;
+  background-color:#333;
+  position:fixed;
+  top:0;
   width:100%;
-  margin-bottom:15px;
+  z-index:1000;
 }
-
-.btn-group button, .btn-group1 button {
-  flex:1;
-  margin-right:5px;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.btn-group button:last-child, .btn-group1 button:last-child {
-  margin-right:0;
-}
-
-footer {
-  background:#2563eb;
-  color:#fff;
-  padding:10px;
+.navbar a {
+  float:left;
+  display:block;
+  color:#f2f2f2;
   text-align:center;
-  flex: 0 0 auto;
+  padding:14px 20px;
+  text-decoration:none;
+  font-size:17px;
 }
-
-.btn-group button.active, .btn-group1 button.active {
-  box-shadow: 0 0 10px orange;
-  border: 2px solid orange;
-}
-
+.navbar a:hover { background-color:#ddd; color:black; }
+.navbar a.active { background-color:#04AA6D; color:white; }
 
 @media(max-width:600px){
   .controls { flex-direction: column; }
   .controls button { width:100%; }
+  .btn-group1 { flex-direction: column; }
+  .btn-group1 button { width:100%; }
 }
 
+/* ==================== Buttons & Controls ==================== */
+.controls button, .search-container button {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.controls button:hover, .search-container button:hover {
+    background-color: #0056b3;
+}
+
+/* ==================== Transcript Area ==================== */
+#transcript {
+    min-height: 50px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+
+/* ==================== Highlight ==================== */
+mark {
+    background-color: yellow;
+    color: black;
+}
+
+/* ==================== Tabs ==================== */
 .tabcontent {
-  display: none; /* hide by default */
-  margin-top: 20px;
+    display: none; /* Hidden by default */
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #f1f1f1;
 }
 
-.tabcontent img {
-  display: block;         /* stack vertically */
-  margin: 15px auto;      /* center */
-  width: 80%;             /* take 80% of container width */
-  max-width: 800px;       /* limit max size */
-  height: auto;           /* keep aspect ratio */
+.tabcontent.active {
+    display: block; /* Show active tab */
 }
 
+.subtabcontent {
+    display: none;
+    padding: 8px;
+    margin-top: 5px;
+    border-left: 3px solid #007BFF;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
 
+.subtabcontent.active {
+    display: block;
+}
+
+/* ==================== Search Input ==================== */
+.search-container input[type="text"] {
+    padding: 6px 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+#transcript {
+    min-height: 50px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+
+/* Highlight matched text */
+mark {
+    background-color: yellow;
+    color: black;
+}
+
+/* Interim live transcript in gray */
+#transcript span {
+    color: gray;
+}
+
+/* Active tabs/sub-tabs display */
+.tabcontent, .subtabcontent {
+    display: none;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+.tabcontent.active, .subtabcontent.active {
+    display: block;
+}
 

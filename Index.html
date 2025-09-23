@@ -2,121 +2,254 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QA Assistant</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="controls">
-      <button id="recordBtn">🎤 Start Recording</button>
-      <button id="stopBtn">⏹ Stop</button>
-      <button id="clearBtn">🧹 Clear</button>
-    </div>
 
-    <h3>Transcript</h3>
-    <div id="transcript">
-      Your recorded or typed question will appear here...
+<!-- Navbar -->
+<div class="navbar">
+  <a href="#" class="active" onclick="openTab(event, 'Selenium')">Selenium</a>
+  <a href="#" onclick="openTab(event, 'Java')">Java</a>
+  <a href="#" onclick="openTab(event, 'API')">API</a>
+  <a href="#" onclick="openTab(event, 'ManualTesting')">Manual Testing</a>
+  <a href="#" onclick="openTab(event, 'Git')">Git</a>
+  <a href="#" onclick="openTab(event, 'Jenkin')">Jenkin</a>
+</div>
+<div class="controls">
+  <button id="recordBtn">🎤 Start Recording</button>
+  <button id="stopBtn">⏹ Stop</button>
+  <button id="clearBtn">🧹 Clear</button>
+</div>
+
+<h3>Transcript</h3>
+<div id="transcript">Your recorded or typed question will appear here...</div>
+
+<div class="search-container">
+  <button id="voiceSearchBtn">🔍 Search From Transcript</button>
+</div>
+
+<!-- Example Tabs -->
+<div class="tabcontent" id="JavaTab">
+  <div class="subtabcontent">Java Basics</div>
+  <div class="subtabcontent">Collections Framework</div>
+</div>
+
+<div class="tabcontent" id="SeleniumTab">
+  <div class="subtabcontent">WebDriver Interface</div>
+  <div class="subtabcontent">Locators and Xpath</div>
+</div>
+
+
+  <!-- Main Tabs Content -->
+  <div id="Selenium" class="tabcontent active">
+    <!-- Sub-tabs as button group -->
+           
+	  <div class="btn-group1">
+     		 <button data-topic="BDD Framework" data-target="BDD">BDD Framework</button>
+      		 <button data-topic="BDD Folder Structure" data-target="BDD_Folder">BDD Folder Structure</button>
+      		 <button data-topic="Hybrid Framework" data-target="HybridFramework">Hybrid Framework</button>
+            <button data-topic="Data Driven Framework" data-target="DataDrivenFramework">Data Driven Framework</button>
     </div>
 
     <div class="btn-group1">
-  <button data-topic="Collections in Java" data-target="Collections_in_Java" class="active">Collections in Java</button>
-  <button data-topic="Types of Exceptions" data-target="Exception_Hierarchy">Types of Exceptions</button>
-  <button data-topic="Selenium Exceptions" data-target="Selenium_Exceptions">Selenium Exceptions</button>
-  <button data-topic="Agile Scrum" data-target="Agile_Scrum">Agile Scrum</button>
-</div>
-<div class="btn-group1 gapless">
-  <button data-topic="Web Driver Architecture" data-target="WDA" class="active">Web Driver Architecture</button>
-  <button data-topic="Exception Handling" data-target="Exception_Handling">Exception Handling</button>
-  <button data-topic="Selenium Challenges" data-target="Selenium_Challenges">Selenium Challenges</button>
-  <button data-topic="OOPS" data-target="OOPS">OOPS</button>
-</div>
-    
-    <!-- First Button Group -->
-    <div class="btn-group">
-      <button data-topic="Maven Project" data-target="MavenProject">Maven Project</button>
-      <button data-topic="Abstraction" data-target="Project_Abstraction">Abstraction</button>
+      <button data-topic="Web Driver Architecture" data-target="WDA" class="active">Web Driver Architecture</button>
+      <button data-topic="Selenium Exceptions" data-target="Selenium_Exceptions">Selenium Exceptions</button>
+      <button data-topic="Selenium Challenges" data-target="Selenium_Challenges">Selenium Challenges</button>
       <button data-topic="Selenium 4 Features" data-target="Selenium4Features">Selenium 4 Features</button>
-      <button data-topic="BDD Framework" data-target="BDD">BDD Framework</button>
     </div>
-
-    <!-- Second Button Group -->
+    
     <div class="btn-group1">
+      <button data-topic="POM vs Page Factory" data-target="POMvsPageFactory">POMvsPageFactory</button>
+      <button data-topic="Window vs WindlowHandles" data-target="WindowvsWindlowHandles">Window vs WindlowHandles</button>
+      <button data-topic="Get vs Navigate" data-target="GetvsNavigate">Get vs Navigate</button>
+      <button data-topic="findElement vs findElemets" data-target="findElementvsfindElemets">findElement vs findElemets</button>
+    </div>
+    
+    <div class="btn-group1">
+      <button data-topic="TakeScreenShot" data-target="TakeScreenShot">Taken Screen Shot</button>
+      <button data-topic="Alert Handle" data-target="AlertHandle">Alert Handle</button>
+      <button data-topic="Waits" data-target="Waits">Waits</button>
+      <button data-topic="Window Handle" data-target="WindowHandle">Window handle</button>
+    </div>
+    
+    <div class="btn-group1">
+      <button data-topic="Scrolling and JavaScriptExecutor" data-target="Scrolling&JavaScriptExecutor">Scrolling and JavaScriptExecutor</button>
+      <button data-topic="Locators" data-target="Locators">Locators</button>
+      <button data-topic="Actions class" data-target="Actionsclass">Actionsclass</button>
+      <button data-topic="Cross-browser" data-target="CrossBrowser">Cross-browser</button>
+    </div>
+
+    <div class="btn-group1">
+      <button data-topic="Page Object Model" data-target="PageObjectModel(POM)">Page Object Model (POM)</button>
+      <button data-topic="Page Factory" data-target="PageFactory">Page Factory</button>
+      <button data-topic="Running tests in parallel" data-target="Runningtestsinparallel">Running tests in parallel</button>
+      <button data-topic="Maven Project" data-target="MavenProject">Maven Project</button>
+    </div>
+    
+    <div class="btn-group1">
+      <button data-topic="Dynamicelementshandling" data-target="Dynamicelementshandling">Dynamic elements handling</button>
+      <button data-topic="FlikeyTestCase" data-target="FlikeyTestCase">FlikeyTestCase</button>
+      <button data-topic="DropDown Handle" data-target="DropDownHandle">DropDown Handle</button>
       <button data-topic="Maven Life Cycle" data-target="MavenLifeCycle">Maven Life Cycle</button>
-      <button data-topic="Command Prompt" data-target="CommandPrompt">Command Prompt</button>
-      <button data-topic="TDD vs BDD" data-target="TDD_BDD">TDD vs BDD</button>
-      <button data-topic="BDD Folder Structure" data-target="BDD_Folder">BDD Folder Structure</button>
     </div>
 
-    <!-- Third Button Group -->
-    <div class="btn-group">
-      <button data-topic="About" data-target="Introduction">About</button>
-      <button data-topic="Data Type" data-target="datatype">Data Type</button>
-      <button data-topic="Data Driven Framework" data-target="DataDrivenFramework">Data Driven Framework</button>
-      <button data-topic="Hybrid Framework" data-target="HybridFramework">Hybrid Framework</button>
+
+    <!-- Subtab Content -->
+    <div id="CrossBrowser" class="subtabcontent">
+      <img src="Images\CrossBrowser1.png" alt="CrossBrowser">
+      <img src="Images\CrossBrowser2.png" alt="CrossBrowser">
+      <img src="Images\CrossBrowser3.png" alt="CrossBrowser">
+      <img src="Images\EmptyImage.png" alt="CrossBrowser">
+      <img src="Images\EmptyImage.png" alt="CrossBrowser">
     </div>
 
-    <!-- Content Sections -->
+      <div id="PageObjectModel(POM)" class="subtabcontent">
+        <img src="Images\POM.png" alt="PageObjectModel">
+        <img src="Images\EmptyImage.png" alt="PageObjectModel">
+        <img src="Images\EmptyImage.png" alt="PageObjectModel">
+      </div>
+      <div id="GetvsNavigate" class="subtabcontent">
+        <img src="Images\GetvVsNavigate.png" alt="PageObjectModel">
+        <img src="Images\EmptyImage.png" alt="PageObjectModel">
+        <img src="Images\EmptyImage.png" alt="PageObjectModel">
+      </div>
 
-    <div id="Collections_in_Java" class="tabcontent" style="display:block">
-  <img src="Images/Collections1.png" alt="Collections1">
-  <img src="Images/Collections2.png" alt="Collections2">
-  <img src="Images/Collections3.png" alt="Collections3">
-</div>
-<div id="Exception_Handling" class="tabcontent" style="display:none">
-  <img src="Images/ExceptionHandling1.png" alt="ExceptionHandling1">
-  <img src="Images/ExceptionHandling2.png" alt="ExceptionHandling2">
-</div>
-<div id="Exception_Hierarchy" class="tabcontent" style="display:none">
-  <img src="Images/ExceptionHierarchy1.png" alt="ExceptionHierarchy1">
-  <img src="Images/ExceptionHierarchy2.png" alt="ExceptionHierarchy2">
-  <img src="Images/ExceptionHierarchy3.png" alt="ExceptionHierarchy3">
-  <img src="Images/ExceptionHierarchy4.png" alt="ExceptionHierarchy4">
-  <img src="Images/ExceptionHierarchy5.png" alt="ExceptionHierarchy5">
-</div>
+      <div id="PageFactory" class="subtabcontent">
+        <img src="Images\PageFactory.png" alt="PageFactory">
+        <img src="Images\EmptyImage.png" alt="PageFactory">
+        <img src="Images\EmptyImage.png" alt="PageFactory">
+      </div>
 
-<div id="Selenium_Exceptions" class="tabcontent" style="display:none">
-  <img src="Images/SeleniumExceptions_001.png" alt="SeleniumExceptions1">
-  <img src="Images/SeleniumExceptions_002.png" alt="SeleniumExceptions2">
-  <img src="Images/SeleniumExceptions_003.png" alt="SeleniumExceptions3">
-  <img src="Images/SeleniumExceptions_004.png" alt="SeleniumExceptions4">
-  <img src="Images/SeleniumExceptions_005.png" alt="SeleniumExceptions5">
-  <img src="Images/SeleniumExceptions_006.png" alt="SeleniumExceptions6">
-  <img src="Images/SeleniumExceptions_007.png" alt="SeleniumExceptions7">
-  <img src="Images/SeleniumExceptions_008.png" alt="SeleniumExceptions8">
-  <img src="Images/SeleniumExceptions_009.png" alt="SeleniumExceptions9">
-  <img src="Images/SeleniumExceptions_010.png" alt="SeleniumExceptions10">
-  <img src="Images/SeleniumExceptions_011.png" alt="SeleniumExceptions11">
-</div>
-<div id="Introduction" class="tabcontent" style="display:none">
-  <img src="Images/Introduction.png" alt="Introduction">
-</div>
+      <div id="Runningtestsinparallel" class="subtabcontent">
+        <img src="Images\ParallelTestExecution.png" alt="RunningTestsInParallel">
+        <img src="Images\EmptyImage.png" alt="RunningTestsInParallel">
+        <img src="Images\EmptyImage.png" alt="RunningTestsInParallel">
+      </div>
+
+      <div id="Dynamicelementshandling" class="subtabcontent">
+        <img src="Images\DynamicElement1.png" alt="DynamicElementsHandling">
+        <img src="Images\DynamicElement2.png" alt="DynamicElementsHandling">
+        <img src="Images\EmptyImage.png" alt="DynamicElementsHandling">
+        <img src="Images\EmptyImage.png" alt="DynamicElementsHandling">
+      </div>
+
+      <div id="FlikeyTestCase" class="subtabcontent">
+        <img src="Images\FlakyTests1.png" alt="FlikeyTestCase">
+        <img src="Images\FlakyTests1.png" alt="FlikeyTestCase">
+        <img src="Images\EmptyImage.png" alt="FlikeyTestCase">
+        <img src="Images\EmptyImage.png" alt="FlikeyTestCase">
+      </div>
+
+      <div id="DropDownHandle" class="subtabcontent">
+        <img src="Images\DropDown.png" alt="DropDownHandle">
+        <img src="Images\EmptyImage.png" alt="DropDownHandle">
+        <img src="Images\EmptyImage.png" alt="DropDownHandle">
+      </div>
+     
+     <div id="Actionsclass" class="subtabcontent">
+        <img src="Images/ActionsClass1.png" alt="ActionsClass1">
+        <img src="Images/ActionsClass2.png" alt="ActionsClass2">
+        <img src="Images/ActionsClass3.png" alt="ActionsClass3">
+        <img src="Images/EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images/EmptyImage.png" alt="SeleniumExceptions11">
+      </div>
 
 
-<div id="Agile_Scrum" class="tabcontent" style="display:none">
-  <img src="Images/AGILE001.png" alt="Agile1">
-  <img src="Images/AGILE002.png" alt="Agile2">
-  <img src="Images/AGILE003.png" alt="Agile3">
-  <img src="Images/AGILE004.png" alt="Agile4">
-  <img src="Images/AGILE005.png" alt="Agile5">
-  <img src="Images/AGILE006.png" alt="Agile6">
-  <img src="Images/AGILE007.png" alt="Agile7">
-  <img src="Images/AGILE008.png" alt="Agile8">
-</div>
-<div id="WDA" class="tabcontent" style="display:none">
-  <img src="Images/SC1.png" alt="SC1">
-  <img src="Images/SC2.png" alt="SC2">
-  <img src="Images/SC3.png" alt="SC3">
-  <img src="Images/SC4.png" alt="SC4">
-  <img src="Images/SC5.png" alt="SC5">
-</div>
-<div id="HashMap" class="tabcontent" style="display:none">
-  <img src="Images/HashMap01.png" alt="HashMap1">
-  <img src="Images/HashMap02.png" alt="HashMap2">
-  <img src="Images/HashMap03.png" alt="HashMap3">
-  <img src="Images/HashMap04.png" alt="HashMap4">
-</div>
-<div id="Selenium_Challenges" class="tabcontent" style="display:none">
-  <img src="Images/SeleniumChallanges_001.png" alt="SeleniumChallanges1">
+     <div id="Locators" class="subtabcontent">
+      <img src="Images/Locators1.png" alt="Locators1">
+      <img src="Images/Locators2.png" alt="Locators2">
+      <img src="Images/Locators3.png" alt="Locators3">
+      <img src="Images/Locators4.png" alt="Locators4">
+      <img src="Images/Locators5.png" alt="Locators5">
+      <img src="Images/Locators6.png" alt="Locators6">
+      <img src="Images/Locators7.png" alt="Locators7">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+    <div id="Scrolling&JavaScriptExecutor" class="subtabcontent">
+      <img src="Images\JavaScriptExecutor1.png" alt="SeleniumExceptions11">
+      <img src="Images\JavaScriptExecutor2.png" alt="SeleniumExceptions11">      
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+     
+    <div id="WindowHandle" class="subtabcontent">
+      <img src="Images\WindowHandle1.png" alt="SeleniumExceptions11">
+      <img src="Images\WindowHandle2.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+     <div id="TakeScreenShot" class="subtabcontent">
+      <img src="Images\TakeScreenShot.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+     <div id="findElementvsfindElemets" class="subtabcontent">
+      <img src="Images\FindElementvsFindElements.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+     <div id="WindowvsWindlowHandles" class="subtabcontent">
+      <img src="Images\WindowHandle2.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+     
+    <div id="POMvsPageFactory" class="subtabcontent">
+      <img src="Images\POM.png" alt="SeleniumExceptions11">
+      <img src="Images\PageFactory.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+    <div id="Waits" class="subtabcontent">
+      <img src="Images\Wait1.png" alt="SeleniumExceptions1">
+      <img src="Images\Wait2.png" alt="SeleniumExceptions2">
+      <img src="Images\Wait3.png" alt="SeleniumExceptions3">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+    
+    <div id="Selenium_Exceptions" class="subtabcontent">
+        <img src="Images/SeleniumExceptions_001.png" alt="SeleniumExceptions1">
+        <img src="Images/SeleniumExceptions_002.png" alt="SeleniumExceptions2">
+        <img src="Images/SeleniumExceptions_003.png" alt="SeleniumExceptions3">
+        <img src="Images/SeleniumExceptions_004.png" alt="SeleniumExceptions4">
+        <img src="Images/SeleniumExceptions_005.png" alt="SeleniumExceptions5">
+        <img src="Images/SeleniumExceptions_006.png" alt="SeleniumExceptions6">
+        <img src="Images/SeleniumExceptions_007.png" alt="SeleniumExceptions7">
+        <img src="Images/SeleniumExceptions_008.png" alt="SeleniumExceptions8">
+        <img src="Images/SeleniumExceptions_009.png" alt="SeleniumExceptions9">
+        <img src="Images/SeleniumExceptions_010.png" alt="SeleniumExceptions10">
+        <img src="Images/SeleniumExceptions_011.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+    
+    <div id="WDA" class="subtabcontent">
+        <img src="Images/SC1.png" alt="SC1">
+        <img src="Images/SC2.png" alt="SC2">
+        <img src="Images/SC3.png" alt="SC3">
+        <img src="Images/SC4.png" alt="SC4">
+        <img src="Images/SC5.png" alt="SC5">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+    
+    <div id="AlertHandle" class="subtabcontent">
+        <img src="Images\Alert1.png" alt="Alert">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+
+    <div id="Selenium_Challenges" class="subtabcontent">
+        <img src="Images/SeleniumChallanges_001.png" alt="SeleniumChallanges1">
   <img src="Images/SeleniumChallanges_002.png" alt="SeleniumChallanges2">
   <img src="Images/SeleniumChallanges_003.png" alt="SeleniumChallanges3">
   <img src="Images/SeleniumChallanges_004.png" alt="SeleniumChallanges4">
@@ -127,43 +260,30 @@
   <img src="Images/SeleniumChallanges_009.png" alt="SeleniumChallanges9">
   <img src="Images/SeleniumChallanges_010.png" alt="SeleniumChallanges10">
   <img src="Images/SeleniumChallanges_013.png" alt="SeleniumChallanges13">
-</div>
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
 
-<div id="OOPS" class="tabcontent" style="display:none">
-  <img src="Images/OOPS1.png" alt="OOPS1">
-  <img src="Images/OOPS2.png" alt="OOPS2">
-  <img src="Images/OOPS3.png" alt="OOPS3">
-  <img src="Images/OOPS4.png" alt="OOPS4">
-  <img src="Images/OOPS5.png" alt="OOPS5">
-  <img src="Images/OOPS6.png" alt="OOPS6">
-</div>
-<div id="TDD_BDD" class="tabcontent" style="display:none">
-  <img src="Images/tdd0.png" alt="TDD0">
-  <img src="Images/tdd1.png" alt="TDD1">
-</div>
-<div id="CommandPrompt" class="tabcontent" style="display:none">
-  <img src="Images/COM1.png" alt="COM1">
-  <img src="Images/COM2.png" alt="COM2">
-  <img src="Images/COM3.png" alt="COM3">
-  <img src="Images/COM4.png" alt="COM4">
-  <img src="Images/COM5.png" alt="COM5">
-  <img src="Images/COM6.png" alt="COM6">
-  <img src="Images/COM7.png" alt="COM7">
-  <img src="Images/COM8.png" alt="COM8">
-  <img src="Images/COM9.png" alt="COM9">
-  <img src="Images/COM10.png" alt="COM10">
-  <img src="Images/COM11.png" alt="COM11">
-  <img src="Images/COM12.png" alt="COM12">
-  <img src="Images/COM13.png" alt="COM13">
-</div>
-    <div id="BDD_Folder" class="tabcontent">
+    <div id="Selenium4Features" class="subtabcontent">
+        <img src="Images/Selenium4_01.png" alt="Selenium 4 Feature 1">
+  <img src="Images/Selenium4_02.png" alt="Selenium 4 Feature 2">
+  <img src="Images/Selenium4_03.png" alt="Selenium 4 Feature 3">
+  <img src="Images/Selenium4_04.png" alt="Selenium 4 Feature 4">
+  <img src="Images/Selenium4_05.png" alt="Selenium 4 Feature 5">
+  <img src="Images/Selenium4_06.png" alt="Selenium 4 Feature 6">
+  <img src="Images/Selenium4_07.png" alt="Selenium 4 Feature 7">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+    </div>
+        <div id="BDD_Folder" class="subtabcontent">
       <img src="Images/BDD_Folder1.png" alt="BDD1">
       <img src="Images/BDD_Folder2.png" alt="BDD2">
       <img src="Images/BDD_Folder3.png" alt="BDD3">
       <img src="Images/BDD_Folder4.png" alt="BDD4">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
     </div>
-
-    <div id="BDD" class="tabcontent">
+        <div id="BDD" class="subtabcontent">
      <img src="Images/BDD001.png" alt="BDD1">
      <img src="Images/BDD002.png" alt="BDD2">
      <img src="Images/BDD003.png" alt="BDD3">
@@ -176,9 +296,10 @@
      <img src="Images/BDD010.png" alt="BDD10">
      <img src="Images/BDD011.png" alt="BDD11">
      <img src="Images/BDD012.png" alt="BDD12">
+     <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+     <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
     </div>
-
-    <div id="HybridFramework" class="tabcontent">
+        <div id="HybridFramework" class="subtabcontent">
           <img src="Images/Hybrid1.png" alt="Hybrid1">
   <img src="Images/Hybrid2.png" alt="Hybrid2">
   <img src="Images/Hybrid3.png" alt="Hybrid3">
@@ -186,51 +307,9 @@
   <img src="Images/Hybrid5.png" alt="Hybrid5">
   <img src="Images/Hybrid6.png" alt="Hybrid6">
   <img src="Images/Hybrid7.png" alt="Hybrid7">
-
+  
     </div>
-
-    <div id="MavenLifeCycle" class="tabcontent">
-  <img src="Images/MavenLife1.png" alt="Maven Life Cycle 1">
-  <img src="Images/MavenLife2.png" alt="Maven Life Cycle 2">
-  <img src="Images/MavenLife3.png" alt="Maven Life Cycle 3">
-  <img src="Images/MavenLife4.png" alt="Maven Life Cycle 4">
-  <img src="Images/MavenLife5.png" alt="Maven Life Cycle 5">
-  <img src="Images/MavenLife6.png" alt="Maven Life Cycle 6">
-  <img src="Images/MavenLife7.png" alt="Maven Life Cycle 7">
-</div>
-<div id="datatype" class="tabcontent" style="display:none">
-  <img src="Images/datatype.png" alt="Data Type">
-</div>
-
-
-<div id="MavenProject" class="tabcontent">
-  <img src="Images/MavenProject1.png" alt="Maven Project 1">
-  <img src="Images/MavenProject2.png" alt="Maven Project 2">
-  <img src="Images/MavenProject3.png" alt="Maven Project 3">
-  <img src="Images/MavenProject4.png" alt="Maven Project 4">
-  <img src="Images/MavenProject5.png" alt="Maven Project 5">
-  <img src="Images/MavenProject6.png" alt="Maven Project 6">
-  <img src="Images/MavenProject7.png" alt="Maven Project 7">
-</div>
-
-<div id="Project_Abstraction" class="tabcontent">
-  <img src="Images/Abstraction1_Project.png" alt="Abstraction 1">
-  <img src="Images/Abstraction2_Project.png" alt="Abstraction 2">
-  <img src="Images/Abstraction3_Project.png" alt="Abstraction 3">
-  <img src="Images/Abstraction4_Project.png" alt="Abstraction 4">
-  <img src="Images/Abstraction5_Project.png" alt="Abstraction 5">
-</div>
-<div id="Selenium4Features" class="tabcontent">
-  <img src="Images/Selenium4_01.png" alt="Selenium 4 Feature 1">
-  <img src="Images/Selenium4_02.png" alt="Selenium 4 Feature 2">
-  <img src="Images/Selenium4_03.png" alt="Selenium 4 Feature 3">
-  <img src="Images/Selenium4_04.png" alt="Selenium 4 Feature 4">
-  <img src="Images/Selenium4_05.png" alt="Selenium 4 Feature 5">
-  <img src="Images/Selenium4_06.png" alt="Selenium 4 Feature 6">
-  <img src="Images/Selenium4_07.png" alt="Selenium 4 Feature 7">
-</div>
-
-<div id="DataDrivenFramework" class="tabcontent">
+    <div id="DataDrivenFramework" class="subtabcontent">
   <img src="Images/Excel1.png" alt="Excel 1">
   <img src="Images/Excel2.png" alt="Excel 2">
   <img src="Images/Excel3.png" alt="Excel 3">
@@ -238,12 +317,116 @@
   <img src="Images/Excel5.png" alt="Excel 5">
   <img src="Images/Excel6.png" alt="Excel 6">
   <img src="Images/Excel7.png" alt="Excel 7">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
 </div>
 
+<div id="MavenProject" class="subtabcontent">
+  <img src="Images/MavenProject1.png" alt="Maven Project 1">
+  <img src="Images/MavenProject2.png" alt="Maven Project 2">
+  <img src="Images/MavenProject3.png" alt="Maven Project 3">
+  <img src="Images/MavenProject4.png" alt="Maven Project 4">
+  <img src="Images/MavenProject5.png" alt="Maven Project 5">
+  <img src="Images/MavenProject6.png" alt="Maven Project 6">
+  <img src="Images/MavenProject7.png" alt="Maven Project 7">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+</div>
+<div id="MavenLifeCycle" class="subtabcontent">
+  <img src="Images/MavenLife1.png" alt="Maven Life Cycle 1">
+  <img src="Images/MavenLife2.png" alt="Maven Life Cycle 2">
+  <img src="Images/MavenLife3.png" alt="Maven Life Cycle 3">
+  <img src="Images/MavenLife4.png" alt="Maven Life Cycle 4">
+  <img src="Images/MavenLife5.png" alt="Maven Life Cycle 5">
+  <img src="Images/MavenLife6.png" alt="Maven Life Cycle 6">
+  <img src="Images/MavenLife7.png" alt="Maven Life Cycle 7">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+  <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+</div>
 
-  </div> <!-- closes .container -->
+  </div>
 
+  <div id="Java" class="tabcontent">
+    	<div class="btn-group1">
+  	    <button data-topic="Collections in Java" data-target="Collections_in_Java" class="active">Collections in Java</button>
+	      <button data-topic="OOPS" data-target="OOPS">OOPS</button>
+        <button data-topic="Types of Exceptions" data-target="Exception_Hierarchy">Types of Exceptions</button>
+	      <button data-topic="Exception Handling" data-target="Exception_Handling">Exception Handling</button>
+	    </div>
+      <div class="btn-group1">
+  	    <button data-topic="Collections in Java" data-target="Collections_in_Java" class="active">Collections in Java</button>
+	      <button data-topic="OOPS" data-target="OOPS">OOPS</button>
+        <button data-topic="Types of Exceptions" data-target="Exception_Hierarchy">Types of Exceptions</button>
+	      <button data-topic="Exception Handling" data-target="Exception_Handling">Exception Handling</button>
+	    </div>
+      <div id="Collections_in_Java" class="subtabcontent">
+        <img src="Images/Collections1.png" alt="Collections1">
+        <img src="Images/Collections2.png" alt="Collections2">
+        <img src="Images/Collections3.png" alt="Collections3">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      </div>
 
-  <script src="script.js"></script>
+      <div id="OOPS" class="subtabcontent">
+        <img src="Images/OOPS1.png" alt="OOPS1">
+        <img src="Images/OOPS2.png" alt="OOPS2">
+        <img src="Images/OOPS3.png" alt="OOPS3">
+        <img src="Images/OOPS4.png" alt="OOPS4">
+        <img src="Images/OOPS5.png" alt="OOPS5">
+        <img src="Images/OOPS6.png" alt="OOPS6">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      </div>
+      <div id="Exception_Handling" class="subtabcontent">
+        <img src="Images/ExceptionHandling1.png" alt="ExceptionHandling1">
+        <img src="Images/ExceptionHandling2.png" alt="ExceptionHandling2">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      </div>
+      <div id="Exception_Hierarchy" class="subtabcontent" >
+        <img src="Images/ExceptionHierarchy1.png" alt="ExceptionHierarchy1">
+        <img src="Images/ExceptionHierarchy2.png" alt="ExceptionHierarchy2">
+        <img src="Images/ExceptionHierarchy3.png" alt="ExceptionHierarchy3">
+        <img src="Images/ExceptionHierarchy4.png" alt="ExceptionHierarchy4">
+        <img src="Images/ExceptionHierarchy5.png" alt="ExceptionHierarchy5">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+        <img src="Images\EmptyImage.png" alt="SeleniumExceptions11">
+      </div>
+
+  </div>
+
+  <div id="API" class="tabcontent">
+    <h2>API</h2>
+    <p>Content for API goes here...</p>
+  </div>
+
+  <div id="ManualTesting" class="tabcontent">
+    <div class="btn-group1">
+      <button data-topic="Agile Scrum" data-target="Agile_Scrum">Agile Scrum</button>
+    </div>
+    <div id="Agile_Scrum" class="subtabcontent" data-topic="Agile Scrum">
+     <img src="Images/AGILE001.png" alt="Agile1">
+     <img src="Images/AGILE002.png" alt="Agile2">
+     <img src="Images/AGILE003.png" alt="Agile3">
+     <img src="Images/AGILE004.png" alt="Agile4">
+     <img src="Images/AGILE005.png" alt="Agile5">
+     <img src="Images/AGILE006.png" alt="Agile6">
+     <img src="Images/AGILE007.png" alt="Agile7">
+     <img src="Images/AGILE008.png" alt="Agile8">
+</div>
+  </div>
+
+  <div id="Git" class="tabcontent">
+    <h2>Git</h2>
+    <p>Content for Git goes here...</p>
+  </div>
+
+  <div id="Jenkin" class="tabcontent">
+    <h2>Jenkin</h2>
+    <p>Content for Jenkin goes here...</p>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,115 +1,169 @@
 let recognition;
-let listening = false; // tracks whether user clicked "Record"
-// Request microphone permission every time
+let isRecording = false;
+const transcriptDiv = document.getElementById("transcript");
+const recordBtn = document.getElementById("recordBtn");
+const stopBtn = document.getElementById("stopBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+// ---------------- Mic Permission ----------------
 async function requestMicPermission() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    console.log("🎤 Permission granted");
-    // Stop the stream immediately if you only want the prompt
-    stream.getTracks().forEach(track => track.stop());
-  } catch (err) {
-    console.error("Microphone access denied:", err);
-    alert("Microphone access is required to start recording.");
-  }
-}
-
-// Check if browser supports webkitSpeechRecognition
-if ('webkitSpeechRecognition' in window) {
-  recognition = new webkitSpeechRecognition();
-  recognition.lang = 'en-US';
-  recognition.interimResults = true;
-  recognition.continuous = true;
-
-  recognition.onstart = function() {
-    console.log("🎤 Microphone access granted, recognition started");
-  };
-
-  recognition.onresult = function(event) {
-    let interimTranscript = '';
-    let finalTranscript = '';
-    for (let i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript + ' ';
-      else interimTranscript += event.results[i][0].transcript;
-    }
-    const fullText = finalTranscript + interimTranscript;
-    document.getElementById("transcript").textContent = "🎤 You said:\n" + fullText;
-    highlightMatchingButton(fullText);
-  };
-
-  recognition.onerror = function(event) {
-    console.error("Speech recognition error:", event.error);
-  };
-
-  recognition.onend = function() {
-    // Only restart if user clicked Record
-    if (listening) {
-      console.log("Recognition ended, restarting...");
-      recognition.start();
-    }
-  };
-} else {
-  alert("Speech recognition not supported in this browser. Please use Chrome.");
-}
-
-// Start listening
-function startListening() {
-  if (recognition && !listening) {
-    listening = true;
     try {
-      recognition.start();
-      document.getElementById("transcript").textContent = "🎤 Listening...";
-    } catch(e) {
-      console.error("Error starting recognition:", e);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(track => track.stop()); // stop immediately
+    } catch (err) {
+        alert("Microphone access denied.");
+        throw err;
     }
-  }
 }
 
+// ---------------- Speech Recognition ----------------
+function createRecognition() {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
 
-// Stop listening
-function stopListening() {
-  if (recognition) {
-    listening = false;
-    recognition.stop();
-    document.getElementById("transcript").textContent += "\n🛑 Stopped";
-  }
+    recognition.onresult = function(event) {
+        let interimTranscript = "";
+        let finalTranscript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                finalTranscript += transcript + " ";
+            } else {
+                interimTranscript += transcript + " ";
+            }
+        }
+
+        // Display live transcript
+        transcriptDiv.innerHTML = `<span style="color:gray">${interimTranscript}</span>${finalTranscript}`;
+
+        // Perform live search & highlight
+        const combinedText = (finalTranscript + interimTranscript).trim();
+        liveSearch(combinedText);
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+    };
+
+    recognition.onend = function() {
+        // Auto-restart if user hasn't clicked stop
+        if (isRecording) recognition.start();
+    };
 }
 
-// Clear transcript and button highlights
-function clearTranscript() {
-  document.getElementById("transcript").textContent = "";
-  document.querySelectorAll(".btn-group button, .btn-group1 button").forEach(btn => btn.classList.remove("active"));
+// ---------------- Clear Highlights ----------------
+function clearHighlights() {
+    document.querySelectorAll(".subtabcontent, .tabcontent").forEach(tab => {
+        tab.innerHTML = tab.textContent; // remove <mark>
+        tab.classList.remove("active");
+    });
 }
 
-// Highlight buttons based on transcript
-function highlightMatchingButton(text) {
-  const buttons = document.querySelectorAll(".btn-group button, .btn-group1 button");
-  const lowerText = text.toLowerCase();
+// ---------------- Live Search & Highlight ----------------
+// ---------------- Live Search & Highlight ----------------
+function liveSearch(text) {
+    if (!text) return;
+    const searchText = text.trim().toLowerCase();
+    if (!searchText) return;
 
-  buttons.forEach(btn => {
-    const topic = btn.dataset.topic.toLowerCase();
-    const topicWords = topic.split(' ');
-    const match = topicWords.some(word => lowerText.includes(word));
-    if (match) btn.classList.add("active");
-    else btn.classList.remove("active");
-  });
+    document.querySelectorAll(".subtabcontent").forEach(subtab => {
+        const topic = (subtab.dataset.topic || subtab.id).toLowerCase();
+
+        if (topic.includes(searchText)) {
+            // Highlight button label instead of images
+            const button = document.querySelector(`[data-target="${subtab.id}"]`);
+            if (button) {
+                button.innerHTML = button.dataset.topic.replace(
+                    new RegExp(`(${searchText})`, "gi"),
+                    "<mark>$1</mark>"
+                );
+            }
+
+            // Activate sub-tab and parent
+            subtab.classList.add("active");
+            const parentTab = subtab.closest(".tabcontent");
+            if (parentTab) parentTab.classList.add("active");
+        } else {
+            // Reset button label
+            const button = document.querySelector(`[data-target="${subtab.id}"]`);
+            if (button) button.innerHTML = button.dataset.topic;
+
+            subtab.classList.remove("active");
+        }
+    });
 }
 
-// Tab button click events
-const tabButtons = document.querySelectorAll(".btn-group button, .btn-group1 button");
-tabButtons.forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    const targetId = btn.dataset.target;
-    document.querySelectorAll('.tabcontent').forEach(div => div.style.display = 'none');
-    const target = document.getElementById(targetId);
-    if (target) target.style.display = 'block';
-
-    // Highlight active button
-    tabButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
+// ---------------- Clear Button ----------------
+clearBtn.addEventListener("click", () => {
+    // Reset transcript only
+    transcriptDiv.innerHTML = "Your recorded or typed question will appear here...";
 });
 
-// Attach control buttons
-document.getElementById("recordBtn").addEventListener("click", startListening);
-document.getElementById("stopBtn").addEventListener("click", stopListening);
-document.getElementById("clearBtn").addEventListener("click", clearTranscript);
+
+// ---------------- Buttons ----------------
+// Start Recording
+recordBtn.addEventListener("click", async () => {
+    if (!isRecording) {
+        await requestMicPermission();
+        if (!recognition) createRecognition();
+        recognition.start();
+        isRecording = true;
+        recordBtn.textContent = "🎤 Recording...";
+    }
+});
+
+// Stop Recording
+stopBtn.addEventListener("click", () => {
+    if (isRecording && recognition) {
+        recognition.stop();
+        isRecording = false;
+        recordBtn.textContent = "🎤 Start Recording";
+    }
+});
+
+
+// Main Tabs
+function openTab(evt, tabName) {
+  // Hide all main tab contents
+  document.querySelectorAll(".tabcontent").forEach(tab => tab.classList.remove("active"));
+
+  // Remove 'active' from all navbar links
+  document.querySelectorAll(".navbar a").forEach(link => link.classList.remove("active"));
+
+  // Show the selected tab
+  const selectedTab = document.getElementById(tabName);
+  if (selectedTab) selectedTab.classList.add("active");
+
+  // Highlight clicked navbar link
+  evt.currentTarget.classList.add("active");
+
+  // Automatically select first sub-tab if exists
+  const firstSub = selectedTab.querySelector(".btn-group1 button");
+  if (firstSub) {
+    firstSub.click();
+  }
+}
+
+// Sub-tabs (inside Selenium)
+document.querySelectorAll(".btn-group1 button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const targetId = btn.dataset.target;
+
+    // Hide all subtab contents within the parent tab
+    const parent = btn.closest(".tabcontent");
+    parent.querySelectorAll(".subtabcontent").forEach(div => div.classList.remove("active"));
+
+    // Remove 'active' from all buttons in this group
+    btn.closest(".btn-group1").querySelectorAll("button").forEach(b => b.classList.remove("active"));
+
+    // Show the selected subtab
+    const subtab = document.getElementById(targetId);
+    if(subtab) subtab.classList.add("active");
+
+    // Highlight the button
+    btn.classList.add("active");
+  });
+});
